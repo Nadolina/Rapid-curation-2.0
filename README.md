@@ -30,7 +30,7 @@ gfastats <original haplotypes combined fasta> --agp-to-path <main haplotype corr
 ## Wishlist 
 1. A metadata tag for mis-phased scaffolds such that they don't have to be manually removed by name
 2. Painting both haplotypes and generating an AGP for each instead of one AGP - may be complicated by the unpainted scaffolds 
-3. The rapid-curation scripts replace 'Scaffold' with 'SUPER' for the painted chromosomes, and rename the X and Y as SUPER_X and SUPER_Y - we will need to  replicate this.
+3. The rapid-curation scripts replace 'Scaffold' with 'SUPER' for the painted chromosomes, and rename the X and Y as SUPER_X and SUPER_Y - we will need to  replicate this. It doesn't seem like the names can be changed in the AGP prior to imposing the corrected agp on a fasta to generate the final fasta - scaffolds that are joined appear to get lost as a result. 
 
 
 ## FAQ
