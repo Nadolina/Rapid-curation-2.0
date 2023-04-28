@@ -43,6 +43,9 @@ with open(sys.argv[2], "r") as f:
                 # print (line)
                 # print (line [5], line[7])
                 seen[line[5]] = max(seen.setdefault(line[5],0), int(line[7]))
+
+stdout_file=sys.stdout
+sys.stdout = open('corrected.agp', 'w')
                 
 with open(sys.argv[2], "r") as f:
     curr_scaff = None
@@ -89,6 +92,7 @@ with open(sys.argv[2], "r") as f:
     # if curr_scaff:
     #     print(f"{curr_scaff}: {correct} bp correction", file=sys.stderr)
 
+
 maxn += 1
 print(
     *(
@@ -99,3 +103,6 @@ print(
     ),
     sep="\n",
 )
+
+sys.stdout.close()
+sys.stdout = stdout_file
