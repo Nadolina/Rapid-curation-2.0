@@ -34,6 +34,7 @@ gfastats <original haplotypes combined fasta> --agp-to-path <main haplotype corr
 4. The ability to open two pretextview windows, for comparison of pre-/post-curation maps. I fear my computer would promptly melt though. 
 5. Need to sort the fasta before plotting pretextmap - gfastats <fasta> --sort ascending. This will require another file to track these movments. Perhaps just a GFA? Will require a renaming function in that case if we intend to keep to a gfa. 
 6. Generating the chromosome file that is necessary for NCBI submissions. Will need to be able to double check for unloc pieces.
+7. Another program for automatically pushing the curated files to S3. 
 
 
 ## FAQ
