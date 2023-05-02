@@ -33,7 +33,7 @@ gfastats <original haplotypes combined fasta> --agp-to-path <main haplotype corr
 3. The rapid-curation scripts replace 'Scaffold' with 'SUPER' for the painted chromosomes, and rename the X and Y as SUPER_X and SUPER_Y - we will need to  replicate this. It doesn't seem like the names can be changed in the AGP prior to imposing the corrected agp on a fasta to generate the final fasta - scaffolds that are joined appear to get lost as a result. 
 4. The ability to open two pretextview windows, for comparison of pre-/post-curation maps. I fear my computer would promptly melt though. 
 5. Need to sort the fasta before plotting pretextmap - gfastats <fasta> --sort ascending. This will require another file to track these movments. Perhaps just a GFA? Will require a renaming function in that case if we intend to keep to a gfa. 
-6. Generating the chromosome file that is necessary for NCBI submissions. 
+6. Generating the chromosome file that is necessary for NCBI submissions. Will need to be able to double check for unloc pieces.
 
 
 ## FAQ
