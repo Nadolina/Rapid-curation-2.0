@@ -27,6 +27,11 @@ gfastats <original haplotypes combined fasta> --agp-to-path <main haplotype corr
 ```
 7. Plot new PretextMap to ensure curation worked as anticipated. 
 
+## Requirements
+
+Biopython v1.81
+gfastats v1.2.6 
+
 ## Wishlist/operations to include 
 1. A metadata tag for mis-phased scaffolds such that they don't have to be manually removed by name
 2. Painting both haplotypes and generating an AGP for each instead of one AGP - may be complicated by the unpainted scaffolds 
