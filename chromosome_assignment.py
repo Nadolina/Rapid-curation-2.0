@@ -13,14 +13,18 @@ with open(corr_agp) as file:
     agp = csv.reader(file,delimiter='\t')
     for line in agp:
         agp_lines.append(line)
+
 file.close()
 
 x=0
+unlocs_haps=[]
 chr_list=[]
 X_chr=""
 Y_chr=""
 W_chr=""
 Z_chr=""
+sex_chrs=[X_chr,Y_chr,W_chr,Z_chr]
+
 while x < (len(agp_lines)):
     line = agp_lines[x]
     if "#" in line[0]:
@@ -35,9 +39,16 @@ while x < (len(agp_lines)):
     elif line[-2]=="Z":
         Z_chr=line[0]
     elif line[-1]=="Painted" or line[-1]=="proximity_ligation":
-        if line[0] != X_chr and line[0] != Y_chr and line[0] != W_chr and line[0] != Z_chr:
-            chr_list.append(line[0])
-    x+=1 
+        chr_list.append(line[0])
+    elif line[-2]=="Unloc":
+        chr_list.append(line[0]+"_unloc")
+        
+    x+=1 ## I feel like we just need to make this chunk into a function and repeat it for X/Y/Z/W (the redundancy is bothering me).
+
+chr_list_filter = [chr for chr in chr_list if chr != X_chr and chr != Y_chr and chr != W_chr and chr != Z_chr]
+
+print ([chr for chr in chr_list_filter])
+
 
 scaff_num=1
 new_records=[]
@@ -45,7 +56,7 @@ inter_chr_dict={}
 with open(hap_sort) as original:
     records = SeqIO.parse(original, 'fasta')
     for record in records:
-        if record.id in chr_list:
+        if record.id in chr_list_filter:
             inter_chr_dict[record.id]=("SUPER_"+str(scaff_num))
             record.id=("SUPER_"+str(scaff_num))
             scaff_num += 1

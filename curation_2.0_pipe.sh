@@ -46,18 +46,24 @@ python3 AGPcorrect.py ${fasta} ${agpfile}
 if [ ${hap} -eq 1 ]
 then 
     printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n"
+
     echo "grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp"
     grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp 
+
+    python3 unloc.py
 elif [ ${hap} -eq 2 ]
 then
     printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n"
+
     echo "grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp"
     grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp 
+
+    python3 unloc.py
 fi
 
 echo "${use_gfastats} $fasta --agp-to-path hap.agp -o hap.fa"
-${use_gfastats} $fasta --agp-to-path hap.agp -ofa | \
-    ${use_seqkit} sort -lr -o hap.sorted.fa 
+${use_gfastats} $fasta --agp-to-path hap.unlocs.no_hapdups.agp -ofa | \
+   ${use_seqkit} sort -lr -o hap.sorted.fa 
 
-python3 chromosome_assignment.py 
+# python3 chromosome_assignment.py 
 
