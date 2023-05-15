@@ -35,6 +35,28 @@ gfastats v1.2.6
 
 pandas 
 
+## Getting started 
+
+Before curating: 
+1. Decontaminate the haplotypic assemblies. 
+2. Modify the names in the decontaminated assemblies; H1.scaffold_1 for hap1 and H2.scaffold_2. The post-scritps are designed to accept this H1 and H2 notation. 
+3. Concatenate the assemblies into a single fasta; plot a pretext map. 
+
+Curation:
+5. Curate one haplotype at a time 
+    a. Label sex chromosomes, haplotigs and unlocs with metadata tags.
+    b. Paint the chromosomes for the main haplotype as well as sex chromosomes; generate an agp. Do not paint haplotigs, just leave them with metadata tags. 
+    c. Remove the painting and curate the other haplotype. 
+    d. Paint the second haplotype but do not include sex chromosomes; generate a second haplotype. 
+
+Post-curation:
+6. sh curation_2.0_pipe.sh -f <haplotype combined fasta> -a <haplotype agp> -p <haplotype in question 1 or 2> 
+7. Generate a pretext map for each haplotype to ensure it curated as anctipated. 
+  
+## Outputs 
+
+ADD THIS 
+  
 ## Wishlist/operations to include 
 1. A metadata tag for mis-phased scaffolds such that they don't have to be manually removed by name
 2. Painting both haplotypes and generating an AGP for each instead of one AGP - may be complicated by the unpainted scaffolds 
