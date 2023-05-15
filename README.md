@@ -47,3 +47,9 @@ gfastats v1.2.6
 1. Why won't my PretextMap open in PretextView?
 
 > Hi-res PretextMaps likely require an HPC to generate the map, but will also require a discrete GPU to open the map in PretextView because it requires 16GB of RAM (i./e/ Macbooks with the M1 chip will have this capacity).
+  
+2. Why aren't my unlocalized (unloc) sequences being named correctly?
+  
+> a. I (at this time) configured the pipeline to process unlocs placed at the end of their respective chromosome assignments. Processing unlocs placed at the beginning of the painted chromosome is more complicated, but is possible - time permitting I will go back and modify this in the future. For now ***place all unlocs at the right end of their painted chromosome***.
+ 
+> b. The unlocs also have to be painted. Double check to make sure they have been painted along with their assigned chromosome. 
