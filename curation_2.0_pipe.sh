@@ -65,5 +65,5 @@ echo "${use_gfastats} $fasta --agp-to-path hap.agp -o hap.fa"
 ${use_gfastats} $fasta --agp-to-path hap.unlocs.no_hapdups.agp -ofa | \
    ${use_seqkit} sort -lr -o hap.sorted.fa 
 
-# python3 chromosome_assignment.py 
+python3 chromosome_assignment.py 
 
