@@ -30,7 +30,10 @@ gfastats <original haplotypes combined fasta> --agp-to-path <main haplotype corr
 ## Requirements
 
 Biopython v1.81
+
 gfastats v1.2.6 
+
+pandas 
 
 ## Wishlist/operations to include 
 1. A metadata tag for mis-phased scaffolds such that they don't have to be manually removed by name
