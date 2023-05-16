@@ -44,10 +44,10 @@ Before curating:
 
 Curation:
 5. Curate one haplotype at a time 
-    a. Label sex chromosomes, haplotigs and unlocs with metadata tags.
+    a. Label sex chromosomes, haplotigs and unlocs with metadata tags. Label any mis-phased scaffolds with the haplotig tag.
     b. Paint the chromosomes for the main haplotype as well as sex chromosomes; generate an agp. Do not paint haplotigs, just leave them with metadata tags. 
-    c. Remove the painting and curate the other haplotype. 
-    d. Paint the second haplotype but do not include sex chromosomes; generate a second haplotype. 
+    c. Remove the painting and curate the other haplotype. Keep in mind there may need to be haplotig tags removed from the first haplotype curation, or you may need to add tags.
+    d. Paint the second haplotype but do not include sex chromosomes. Generate a second AGP. 
 
 Post-curation:
 6. sh curation_2.0_pipe.sh -f <haplotype combined fasta> -a <haplotype agp> -p <haplotype in question 1 or 2> 
