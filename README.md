@@ -52,6 +52,7 @@ Curation:
     d. Paint the second haplotype but do not include sex chromosomes. Generate a second AGP. 
 
 Post-curation:
+
 5. sh curation_2.0_pipe.sh -f <haplotype combined fasta> -a <haplotype agp> -p <haplotype in question 1 or 2> 
 6. Generate a pretext map for each haplotype to ensure it curated as anctipated. 
   
