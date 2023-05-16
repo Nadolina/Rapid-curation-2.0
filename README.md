@@ -45,15 +45,24 @@ Before curating:
 
 Curation:
 
-4. Curate one haplotype at a time 
-    a. Label sex chromosomes, haplotigs and unlocs with metadata tags. Label any mis-phased scaffolds with the haplotig tag.
-    b. Paint the chromosomes for the main haplotype as well as sex chromosomes; generate an agp. Do not paint haplotigs, just leave them with metadata tags. 
-    c. Remove the painting and curate the other haplotype. Keep in mind there may need to be haplotig tags removed from the first haplotype curation, or you may need to add tags.
+4. Curate one haplotype at a time: <br>
+    a. Label sex chromosomes, haplotigs and unlocs with metadata tags. Label any mis-phased scaffolds with the haplotig tag. <br>
+    b. Paint the chromosomes for the main haplotype as well as sex chromosomes; generate an agp. Do not paint haplotigs, just leave them with metadata tags. <br>
+    c. Remove the painting and curate the other haplotype. Keep in mind there may need to be haplotig tags removed from the first haplotype curation, or you may need to add tags. <br>
     d. Paint the second haplotype but do not include sex chromosomes. Generate a second AGP. 
 
 Post-curation:
 
-5. sh curation_2.0_pipe.sh -f <haplotype combined fasta> -a <haplotype agp> -p <haplotype in question 1 or 2> 
+5. Run the post-scripts. You'll have to run this once for each haplotype using the same haplotype combined fasta, but with each agp once and their corresponding haplotype (ID'd by 1 or 2)
+```
+sh curation_2.0_pipe.sh -f <haplotype combined fasta> -a <haplotype agp> -p <haplotype in question 1 or 2> 
+-h help
+-f combined haplotype fasta
+-a haplotype agp generated from pretextview
+-p (p for primary) pass 1 for hap 1 and 2 for hap 2
+ie/
+sh curation_2.0_pipe.sh -f rCycPin1.HiC.haps_combined.fasta -a rCycPin1.HiC.haps_combined.pretext.agp_hap2 -p 2 
+```
 6. Generate a pretext map for each haplotype to ensure it curated as anctipated. 
   
 ## Outputs 
@@ -78,6 +87,5 @@ ADD THIS
   
 2. Why aren't my unlocalized (unloc) sequences being named correctly?
   
-> a. I (at this time) configured the pipeline to process unlocs placed at the end of their respective chromosome assignments. Processing unlocs placed at the beginning of the painted chromosome is more complicated, but is possible - time permitting I will go back and modify this in the future. For now ***place all unlocs at the right end of their painted chromosome***.
- 
+> a. I (at this time) configured the pipeline to process unlocs placed at the end of their respective chromosome assignments. Processing unlocs placed at the beginning of the painted chromosome is more complicated, but is possible - time permitting I will go back and modify this in the future. For now ***place all unlocs at the right end of their painted chromosome***. <br>
 > b. The unlocs also have to be painted. Double check to make sure they have been painted along with their assigned chromosome. 
