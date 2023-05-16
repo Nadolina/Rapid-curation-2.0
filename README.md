@@ -79,6 +79,7 @@ ADD THIS
 6. Generating the chromosome file that is necessary for NCBI submissions. Will need to be able to double check for unloc pieces. DONE.
 7. Another program for automatically pushing the curated files to S3. 
 8. Require an operation to remove haplotypic duplications - mind you, I don't know if this will be an issue in a dual curation setting? DONE. 
+9. what does the agp look like with multiple tags/ modify to parse that
 
 
 ## FAQ
