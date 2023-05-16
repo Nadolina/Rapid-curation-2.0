@@ -60,7 +60,8 @@ sh curation_2.0_pipe.sh -f <haplotype combined fasta> -a <haplotype agp> -p <hap
 -f combined haplotype fasta
 -a haplotype agp generated from pretextview
 -p (p for primary) pass 1 for hap 1 and 2 for hap 2
-ie/
+
+Example:
 sh curation_2.0_pipe.sh -f rCycPin1.HiC.haps_combined.fasta -a rCycPin1.HiC.haps_combined.pretext.agp_hap2 -p 2 
 ```
 6. Generate a pretext map for each haplotype to ensure it curated as anctipated. 
