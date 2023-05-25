@@ -3,7 +3,7 @@
 
 import csv 
 import pandas as pd
-import numpy as np
+#import numpy as np
 
 corr_agp="hap.agp"
 
@@ -18,9 +18,24 @@ with open(corr_agp) as file:
             agp_lines.append(line)
 file.close()
 
-agp_df=pd.DataFrame(agp_lines,columns=['chr','chr_start','chr_end','#_scaffs','W','scaff','scaff_start','scaff_end','ori','painted','tag','blank'])
+maxlen=max([len(entry) for entry in agp_lines])
+
+if maxlen < 11:
+    ## Checking for presence of metadata tags - if no unlocs or haplotigs present, the script just generates a replicate agp and exits.
+    print ("No metadata tags used. Are you sure there are no unlocs, haplotigs or sex chromosomes to label?")
+    with open ('hap.unlocs.no_hapdups.agp','w',newline='\n') as f:
+        writer=csv.writer(f,delimiter='\t')
+        writer.writerows(header)
+        writer.writerows(agp_lines)
+    f.close() 
+    exit()
+elif maxlen == 11:
+    agp_df=pd.DataFrame(agp_lines,columns=['chr','chr_start','chr_end','#_scaffs','W','scaff','scaff_start','scaff_end','ori','painted','tag'])
+else:
+    agp_df=pd.DataFrame(agp_lines,columns=['chr','chr_start','chr_end','#_scaffs','W','scaff','scaff_start','scaff_end','ori','painted','tag','blank'])
 
 unlocs=(agp_df.index[agp_df['tag']=='Unloc']).to_list()
+
 
 prox_lig_hap_ind=set()
 scaffs_with_unlocs=[]
@@ -45,6 +60,7 @@ haplotigs=(agp_df.index[agp_df['painted']=='Haplotig'])
 prox_lig_hap_ind.update(haplotigs)
 agp_df_mod=agp_df.drop(list(prox_lig_hap_ind))
 
+
 with open ('hap.unlocs.no_hapdups.agp','w',newline='\n') as f:
     writer=csv.writer(f,delimiter='\t')
     writer.writerows(header)
@@ -52,7 +68,10 @@ with open ('hap.unlocs.no_hapdups.agp','w',newline='\n') as f:
 f.close()
 
 
-    ## I WAS TRYING TO CONFIGURE THIS CODE SUCH THAT UNLOCS CAN BE PLACED AT THE BEGINNING OR END BUT THERE IS A LOT OF FINAGLING INVOLVED THAT IS NOT PERTINENT RIGHT NOW. 
+#---------------------------------------------------
+
+
+    # # I WAS TRYING TO CONFIGURE THIS CODE SUCH THAT UNLOCS CAN BE PLACED AT THE BEGINNING OR END BUT THERE IS A LOT OF FINAGLING INVOLVED THAT IS NOT PERTINENT RIGHT NOW. 
     # if any(ind >= index for ind in ind_list):
     #     print ("Unlocalized sequences at beginning of chromosome assignment.")
     #     if any(unloc != index and unloc in ind_list for unloc in unlocs):

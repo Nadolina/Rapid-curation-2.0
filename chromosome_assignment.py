@@ -2,6 +2,7 @@
 
 import csv
 import sys 
+import re
 from Bio import SeqIO, Seq
 from Bio.SeqRecord import SeqRecord
 
@@ -18,7 +19,7 @@ with open(hap_agp) as file:
 file.close()
 
 x=0
-unlocs_haps=[]
+unlocs_haps={}
 chr_list=[]
 X_chr=""
 Y_chr=""
@@ -31,28 +32,31 @@ while x < (len(agp_lines)):
     if "#" in line[0]:
         x+=1 
         continue
-    elif line[10]=="X":
-        X_chr=line[0]
-        sex_chr.append(line[0])
-    elif line[10]=="Y":
-        Y_chr=line[0]
-        sex_chr.append(line[0])
-    elif line[10]=="W":
-        W_chr=line[0]
-        sex_chr.append(line[0])
-    elif line[10]=="Z":
-        Z_chr=line[0]
-        sex_chr.append(line[0])
-    elif line[9]=="Painted" or line[9]=="proximity_ligation":
-        chr_list.append(line[0])
+    elif line[9]=="Painted" or line[8]=="proximity_ligation":
+        if line[10]=="X":
+            X_chr=line[0]
+            sex_chr.append(line[0])
+        elif line[10]=="Y":
+            Y_chr=line[0]
+            sex_chr.append(line[0])
+        elif line[10]=="W":
+            W_chr=line[0]
+            sex_chr.append(line[0])
+        elif line[10]=="Z":
+            Z_chr=line[0]
+            sex_chr.append(line[0])
+        elif line[10]=="Unloc":
+            orig_name=re.sub('_unloc_[0-9]+$','',line[0])
+            unlocs_haps[line[0]]=orig_name
+        else:
+            chr_list.append(line[0])
+        
     # elif line[-2]=="Unloc":
     #     chr_list.append(line[0]+"_unloc")
         
     x+=1 ## I feel like we just need to make this chunk into a function and repeat it for X/Y/Z/W (the redundancy is bothering me).
 
 chr_list_filter = [chr for chr in chr_list if chr != X_chr and chr != Y_chr and chr != W_chr and chr != Z_chr]
-
-# print ([chr for chr in chr_list_filter])
 
 
 scaff_num=1
@@ -76,6 +80,11 @@ with open(hap_sort) as original:
         elif Z_chr in record.id and Z_chr !="":
             inter_chr_dict[record.id]=((record.id).replace(Z_chr,"SUPER_Z"))
             record.id=((record.id).replace(Z_chr,"SUPER_Z"))
+        elif record.id in unlocs_haps:
+            orig_name=unlocs_haps[record.id]
+            super_name=inter_chr_dict[orig_name]
+            inter_chr_dict[record.id]=re.sub(orig_name,super_name,record.id)
+            record.id=(re.sub(orig_name,super_name,record.id))
         elif record.id in chr_list_filter:
             inter_chr_dict[record.id]=("SUPER_"+str(scaff_num))
             record.id=("SUPER_"+str(scaff_num))

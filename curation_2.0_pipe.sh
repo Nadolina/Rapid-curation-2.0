@@ -30,22 +30,24 @@ while getopts ":hf:a:p:" option; do
     esac
 done
 
+mkdir -p logs 
+count=`ls logs/* | wc -l`
+exec 1<> logs/std.${count}.out
+
 ## Programs/tools
 use_gfastats=/vggpfs/fs3/vgl/store/nbrajuka/gfastats/build/bin/gfastats
 use_seqkit=/vggpfs/fs3/vgl/store/nbrajuka/conda/envs/statistics/bin/seqkit
-use_vsearch=/vggpfs/fs3/vgl/store/nbrajuka/conda/envs/curation/bin/vsearch
-printf "Dependecies:\n"
-printf "Biopython v1.81\n"
-$use_gfastats -v
+#use_vsearch=/vggpfs/fs3/vgl/store/nbrajuka/conda/envs/curation/bin/vsearch
+printf "Dependecies:\nBiopython v1.81\n" 
+$use_gfastats -v 
 
-printf "\nOriginal assembly: ${fasta}" ### but checks/breakpoints for if these aren't provided.
-printf "\nPretextView generated AGP: ${agpfile}\n\n"
+printf "\nOriginal assembly: ${fasta} \nPretextView generated AGP: ${agpfile}\n\n" ### but checks/breakpoints for if these aren't provided.
 
-python3 AGPcorrect.py ${fasta} ${agpfile}
+python3 AGPcorrect.py ${fasta} ${agpfile} 
 
 if [ ${hap} -eq 1 ]
 then 
-    printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n"
+    printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n" 
 
     echo "grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp"
     grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp 
@@ -53,17 +55,19 @@ then
     python3 unloc.py
 elif [ ${hap} -eq 2 ]
 then
-    printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n"
+    printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n" 
 
     echo "grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp"
     grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp 
 
+    printf "\nModifying the AGP to account for unlocalized sequences.\n\n"
     python3 unloc.py
 fi
 
-echo "${use_gfastats} $fasta --agp-to-path hap.agp -o hap.fa"
-${use_gfastats} $fasta --agp-to-path hap.unlocs.no_hapdups.agp -ofa | \
-   ${use_seqkit} sort -lr -o hap.sorted.fa 
+echo "${use_gfastats} $fasta --agp-to-path hap.agp --sort largest -o hap.sorted.fa\n"
+${use_gfastats} $fasta --agp-to-path hap.unlocs.no_hapdups.agp --sort largest -o hap.sorted.fa 2>> logs/std.${count}.out 
 
 python3 chromosome_assignment.py 
+
+exec 1>&-
 
