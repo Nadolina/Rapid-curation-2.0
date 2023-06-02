@@ -40,34 +40,46 @@ use_seqkit=/vggpfs/fs3/vgl/store/nbrajuka/conda/envs/statistics/bin/seqkit
 #use_vsearch=/vggpfs/fs3/vgl/store/nbrajuka/conda/envs/curation/bin/vsearch
 printf "Dependecies:\nBiopython v1.81\n" 
 $use_gfastats -v 
+pth=/lustre/fs5/vgl/store/nbrajuka/curation_scripts/curation2
 
 printf "\nOriginal assembly: ${fasta} \nPretextView generated AGP: ${agpfile}\n\n" ### but checks/breakpoints for if these aren't provided.
 
-python3 AGPcorrect.py ${fasta} ${agpfile} 
+echo "python3 ${pth}/AGPcorrect.py ${fasta} ${agpfile}"
+python3 $pth/AGPcorrect.py ${fasta} ${agpfile} 
 
 if [ ${hap} -eq 1 ]
-then 
+then
+    # outdir=./Hap_1/
+    # mkdir $outdir
+
     printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n" 
 
     echo "grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp"
     grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp 
 
-    python3 unloc.py
+    python3 $pth/unloc.py
+    # mv hap.unlocs.no_hapdups.agp ${outdir}/
 elif [ ${hap} -eq 2 ]
 then
+    # outdir=./Hap_1/
+    # mkdir $outdir
+
     printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n" 
 
     echo "grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp"
     grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp 
 
     printf "\nModifying the AGP to account for unlocalized sequences.\n\n"
-    python3 unloc.py
+    python3 $pth/unloc.py
+    # mv hap.unlocs.no_hapdups.agp ${outdir}/
 fi
 
-echo "${use_gfastats} $fasta --agp-to-path hap.agp --sort largest -o hap.sorted.fa\n"
+printf "${use_gfastats} $fasta --agp-to-path hap.agp --sort largest -o hap.sorted.fa\n"
 ${use_gfastats} $fasta --agp-to-path hap.unlocs.no_hapdups.agp --sort largest -o hap.sorted.fa 2>> logs/std.${count}.out 
 
-python3 chromosome_assignment.py 
+python3 $pth/chromosome_assignment.py 
+# mv int_chr.tsv ${outdir}/
+# mv hap.chr_level.fa ${outdir}/
 
 exec 1>&-
 
