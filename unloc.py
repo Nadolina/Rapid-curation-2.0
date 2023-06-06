@@ -3,13 +3,15 @@
 
 import csv 
 import pandas as pd
-#import numpy as np
+import sys
 
-corr_agp="hap.agp"
+#corr_agp="hap.agp"
+outdir=sys.argv[1]
+hap=outdir + '/hap.agp'
 
 header=[]
 agp_lines=[]
-with open(corr_agp) as file:
+with open(hap) as file:
     agp = csv.reader(file,delimiter='\t')
     for line in agp:
         if "#" in line[0]:
@@ -51,17 +53,19 @@ for index in unlocs: ##This assumes unlocs are placed at the end of scaffolds
         unloc_num+=1
         agp_df.loc[index,'chr']=agp_df.loc[index,'chr']+"_unloc_"+str(unloc_num)
     else:
+        unloc_num=1
         agp_df.loc[index,'chr']=agp_df.loc[index,'chr']+"_unloc_"+str(unloc_num)
         scaffs_with_unlocs.append(scaff)
     if (agp_df.loc[index-1,'ori']) == 'proximity_ligation':
         prox_lig_hap_ind.add(index-1)
+
 
 haplotigs=(agp_df.index[agp_df['painted']=='Haplotig'])
 prox_lig_hap_ind.update(haplotigs)
 agp_df_mod=agp_df.drop(list(prox_lig_hap_ind))
 
 
-with open ('hap.unlocs.no_hapdups.agp','w',newline='\n') as f:
+with open ((outdir+'/hap.unlocs.no_hapdups.agp'),'w',newline='\n') as f:
     writer=csv.writer(f,delimiter='\t')
     writer.writerows(header)
     writer.writerows(agp_df_mod.values.tolist())

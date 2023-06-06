@@ -47,37 +47,56 @@ printf "\nOriginal assembly: ${fasta} \nPretextView generated AGP: ${agpfile}\n\
 echo "python3 ${pth}/AGPcorrect.py ${fasta} ${agpfile}"
 python3 $pth/AGPcorrect.py ${fasta} ${agpfile} 
 
-if [ ${hap} -eq 1 ]
-then
-    # outdir=./Hap_1/
-    # mkdir $outdir
 
-    printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n" 
+mkdir -p Hap_1
+mkdir -p Hap_2
 
-    echo "grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp"
-    grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp 
+python3 $pth/hap_split.py 
 
-    python3 $pth/unloc.py
-    # mv hap.unlocs.no_hapdups.agp ${outdir}/
-elif [ ${hap} -eq 2 ]
-then
-    # outdir=./Hap_1/
-    # mkdir $outdir
+python3 $pth/unloc.py Hap_1
+python3 $pth/unloc.py Hap_2
 
-    printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n" 
 
-    echo "grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp"
-    grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp 
+# if [ ${hap} -eq 1 ]
+# then
+#     # outdir=./Hap_1/
+#     # mkdir $outdir
 
-    printf "\nModifying the AGP to account for unlocalized sequences.\n\n"
-    python3 $pth/unloc.py
-    # mv hap.unlocs.no_hapdups.agp ${outdir}/
-fi
+#     printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n" 
 
-printf "${use_gfastats} $fasta --agp-to-path hap.agp --sort largest -o hap.sorted.fa\n"
-${use_gfastats} $fasta --agp-to-path hap.unlocs.no_hapdups.agp --sort largest -o hap.sorted.fa 2>> logs/std.${count}.out 
+#     echo "grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp"
+#     grep -E '#|Painted|proximity_ligation|H1' corrected.agp > hap.agp 
 
-python3 $pth/chromosome_assignment.py 
+#     python3 $pth/unloc.py
+#     # mv hap.unlocs.no_hapdups.agp ${outdir}/
+# elif [ ${hap} -eq 2 ]
+# then
+#     # outdir=./Hap_1/
+#     # mkdir $outdir
+
+#     printf "\nSplitting haplotype ${hap} from corrected.agp.\n\n" 
+
+#     echo "grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp"
+#     grep -E '#|Painted|proximity_ligation|H2' corrected.agp > hap.agp 
+
+#     printf "\nModifying the AGP to account for unlocalized sequences.\n\n"
+#     python3 $pth/unloc.py
+#     # mv hap.unlocs.no_hapdups.agp ${outdir}/
+# fi
+
+printf "${use_gfastats} $fasta --agp-to-path Hap_1/hap.unlocs.no_hapdups.agp --sort largest -o Hap_1/hap.sorted.fa\n"
+${use_gfastats} $fasta --agp-to-path Hap_1/hap.unlocs.no_hapdups.agp --sort largest -o Hap_1/hap.sorted.fa 2>> logs/std.${count}.out 
+
+printf "${use_gfastats} $fasta --agp-to-path Hap_1/hap.unlocs.no_hapdups.agp --sort largest -o Hap_1/hap.sorted.fa\n"
+${use_gfastats} $fasta --agp-to-path Hap_2/hap.unlocs.no_hapdups.agp --sort largest -o Hap_2/hap.sorted.fa 2>> logs/std.${count}.out 
+
+
+printf "python3 $pth/chromosome_assignment.py Hap_1"
+python3 $pth/chromosome_assignment.py Hap_1
+
+printf "python3 $pth/chromosome_assignment.py Hap_2"
+python3 $pth/chromosome_assignment.py Hap_2 
+
 # mv int_chr.tsv ${outdir}/
 # mv hap.chr_level.fa ${outdir}/
 

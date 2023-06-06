@@ -7,8 +7,10 @@ from Bio import SeqIO, Seq
 from Bio.SeqRecord import SeqRecord
 
 # corr_agp="corrected.agp"
-hap_agp="hap.unlocs.no_hapdups.agp"
-hap_sort="hap.sorted.fa"
+
+outdir=sys.argv[1]
+hap_agp=outdir + "/hap.unlocs.no_hapdups.agp"
+hap_sort=outdir + "/hap.sorted.fa"
 
 agp_lines=[]
 with open(hap_agp) as file:
@@ -104,13 +106,13 @@ with open(hap_sort) as original:
         new_records.append(SeqRecord(record.seq,id=record.id, description=""))
 
 
-with open("inter_chr.tsv",'w') as file: 
+with open((outdir+"/inter_chr.tsv"),'w') as file: 
     for key in inter_chr_dict.keys():
         file.write("%s\t%s\n"%(key,inter_chr_dict[key]))
     file.close()
 
 
-handle=open("hap.chr_level.fa","w")
+handle=open((outdir+"/hap.chr_level.fa"),"w")
 SeqIO.write(new_records,handle,"fasta")
 handle.close()
     
