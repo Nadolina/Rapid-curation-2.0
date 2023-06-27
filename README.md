@@ -1,7 +1,7 @@
 # Rapid-curation-2.0
 TPF-less rapid curation of genomes 
 
-## Protocol: 
+## Manual Protocol: 
 
 1. Modify scaffold names to reflect origin haplotype (i.e./ H1.scaffold_1, H2.scaffold_1) 
 2. Concatenate assemblies with modified scaffold names into a single fasta file; generate PretextMap
