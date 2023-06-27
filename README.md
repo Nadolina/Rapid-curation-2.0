@@ -45,11 +45,19 @@ Before curating:
 
 Curation:
 
-4. Curate one haplotype at a time: <br>
-    a. Label sex chromosomes, haplotigs and unlocs with metadata tags. Label any mis-phased scaffolds with the haplotig tag. <br>
-    b. Paint the chromosomes for the main haplotype as well as sex chromosomes; generate an agp. Do not paint haplotigs, just leave them with metadata tags. <br>
-    c. Remove the painting and curate the other haplotype. Keep in mind there may need to be haplotig tags removed from the first haplotype curation, or you may need to add tags. <br>
-    d. Paint the second haplotype but do not include sex chromosomes. Generate a second AGP. 
+4. Curate both haplotypes simultaneously. The presence of both haplotypes can be especially useful for identifying sex and microchromosomes, as well as haplotig duplications (mis-phased sequences).
+5. Tags and chromosome painting:
+    a. Create "Hap_1" and "Hap_2" tags in PretextView. These tags only need to be created once, PretextView will remember them in other curations. In the PretextView menu, click "Meta Data Tags" and type in the two tags as such: <br>
+   <p align="center">
+     <img width="350" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/ad08e8fa-9674-4f92-9699-8e1fc63ea48f"\>
+     <img width="350" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/1d5e1812-b3d8-4c08-acf7-02a337f87cbd">
+   </p>
+   <br>
+    b. Teasing the haplotypes apart gets a little messy, especially if there are sequences moved between haplotypes (i.e./ a scaffold from Hap_1 assigned to a Hap_2 scaffold or vice versa). The unassigned scaffolds can be sorted by the H1 and H2 notations we added prior to mapping. However, we need to use the Hap_1 and Hap_2 tags we just created to sort the chromosomes. For each chromosome, assign the appropriate haplotype tag to the left most scaffold, as such:
+    <img width="891" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/2e13ff86-977d-465a-9535-9504cda1c8fb">
+
+    
+   
 
 Post-curation:
 
