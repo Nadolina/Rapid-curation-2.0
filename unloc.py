@@ -31,10 +31,14 @@ if maxlen < 11:
         writer.writerows(agp_lines)
     f.close() 
     exit()
+
 elif maxlen == 11:
     agp_df=pd.DataFrame(agp_lines,columns=['chr','chr_start','chr_end','#_scaffs','W','scaff','scaff_start','scaff_end','ori','painted','tag'])
+elif maxlen == 14:
+    agp_df=pd.DataFrame(agp_lines,columns=['chr','chr_start','chr_end','#_scaffs','W','scaff','scaff_start','scaff_end','ori','painted','tag','tag2','blank', 'blank'])
 else:
     agp_df=pd.DataFrame(agp_lines,columns=['chr','chr_start','chr_end','#_scaffs','W','scaff','scaff_start','scaff_end','ori','painted','tag','blank'])
+
 
 unlocs=(agp_df.index[agp_df['tag']=='Unloc']).to_list()
 
@@ -70,6 +74,7 @@ with open ((outdir+'/hap.unlocs.no_hapdups.agp'),'w',newline='\n') as f:
     writer.writerows(header)
     writer.writerows(agp_df_mod.values.tolist())
 f.close()
+
 
 
 #---------------------------------------------------
