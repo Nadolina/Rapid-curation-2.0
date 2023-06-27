@@ -49,12 +49,16 @@ Curation:
 5. Tags and chromosome painting:
     a. Create "Hap_1" and "Hap_2" tags in PretextView. These tags only need to be created once, PretextView will remember them in other curations. In the PretextView menu, click "Meta Data Tags" and type in the two tags as such: <br>
    <p align="center">
-     <img width="350" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/ad08e8fa-9674-4f92-9699-8e1fc63ea48f"\>
-     <img width="350" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/1d5e1812-b3d8-4c08-acf7-02a337f87cbd">
+     <img width="400" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/ad08e8fa-9674-4f92-9699-8e1fc63ea48f"\>
+     <img width="400" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/1d5e1812-b3d8-4c08-acf7-02a337f87cbd">
    </p>
    <br>
-    b. Teasing the haplotypes apart gets a little messy, especially if there are sequences moved between haplotypes (i.e./ a scaffold from Hap_1 assigned to a Hap_2 scaffold or vice versa). The unassigned scaffolds can be sorted by the H1 and H2 notations we added prior to mapping. However, we need to use the Hap_1 and Hap_2 tags we just created to sort the chromosomes. For each chromosome, assign the appropriate haplotype tag to the left most scaffold, as such:
-    <img width="891" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/2e13ff86-977d-465a-9535-9504cda1c8fb">
+    b. Teasing the haplotypes apart gets a little messy, especially if there are sequences moved between haplotypes (i.e./ a scaffold from Hap_1 assigned to a Hap_2 scaffold or vice versa). The unassigned scaffolds can be sorted by the H1 and H2 notations we added prior to mapping. However, we need to use the Hap_1 and Hap_2 tags we just created to sort the chromosomes. **For each chromosome, assign the appropriate haplotype tag to the left most scaffold**, as such: <br>
+   <p align="center">
+    <img width="400" height="300" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/1e2c4a3a-2b2c-4d74-8b8a-ae80228e90bc">
+    <img width="400" height="300" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/a1531c9a-4159-41fd-8d48-9e78c7fa39d3">
+   </p>
+   <br>
 
     
    
