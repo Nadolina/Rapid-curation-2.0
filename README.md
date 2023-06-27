@@ -1,32 +1,6 @@
 # Rapid-curation-2.0
 TPF-less rapid curation of genomes 
 
-## Manual Protocol: 
-
-1. Modify scaffold names to reflect origin haplotype (i.e./ H1.scaffold_1, H2.scaffold_1) 
-2. Concatenate assemblies with modified scaffold names into a single fasta file; generate PretextMap
-3. Curate higher contiguity haplotype within haplotype combined PretextMap; paint autosomes and sex chromosomes 
-4. Generate AGP from PretextView 
-5. Use AGPcorrect.py to correct the scaffold sizes in the AGP that were reduced to standardized texel sizes. 
-```
-python3 AGPcorrect.py <original fasta> <PrextView AGP> 
-  ```
-4. Separate haplotypes from corrected AGP 
-```
-grep -E '#|proximity_ligation|Painted|<haplotype identifier (H1, H2)>.scaffold|<XYZW>' <corrected AGP> > main_haplotype.agp 
-
-grep <other hap identifier (H1, H2)> > other_haplotype.agp 
-```
-5. Relocate any misphased scaffolds (see wishlist item 1) 
-    - create bed file of names of misphased scaffolds and pass to gfastats --exclude 
-    - manually edit AGPs to move scaffolds 
-6. Impose corrected AGP on original fasta 
-
-```
-gfastats <original haplotypes combined fasta> --agp-to-path <main haplotype corrected agp> -ofa 
-```
-7. Plot new PretextMap to ensure curation worked as anticipated. 
-
 ## Requirements
 
 Biopython v1.81
@@ -47,21 +21,21 @@ Curation:
 
 4. Curate both haplotypes simultaneously. The presence of both haplotypes can be especially useful for identifying sex and microchromosomes, as well as haplotig duplications (mis-phased sequences).
 5. Tags: <br>
-    a. Create "Hap_1" and "Hap_2" tags in PretextView. These tags only need to be created once, PretextView will remember them in other curations. In the PretextView menu, click "Meta Data Tags" and type in the two tags as such: <br>
-   <p align="center">
-     <img width="400" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/ad08e8fa-9674-4f92-9699-8e1fc63ea48f"\>
-     <img width="400" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/1d5e1812-b3d8-4c08-acf7-02a337f87cbd">
-   </p>
-   <br>
-    b. Teasing the haplotypes apart gets a little messy, especially if there are sequences moved between haplotypes (i.e./ a scaffold from Hap_1 assigned to a Hap_2 scaffold or vice versa). The unassigned scaffolds can be sorted by the H1 and H2 notations we added prior to mapping. However, we need to use the Hap_1 and Hap_2 tags we just created to sort the chromosomes. For each chromosome, assign the appropriate haplotype tag to the left most scaffold, as such: <br>
-   <p align="center">
-    <img width="400" height="300" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/1e2c4a3a-2b2c-4d74-8b8a-ae80228e90bc">
-    <img width="400" height="300" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/a1531c9a-4159-41fd-8d48-9e78c7fa39d3">
-   </p>
-   <br>
-    c. Tag the sex chromosomes as per usual. The current VGP standard is to move the sex chromosomes into Hap_1, so make sure that any sex chromosomes are also tagged with the Hap_1 tag. <br>
-    d. Tag any unlocalized sequences as "unloc". Place any unloc sequences at the end (right most side) of their chromosomal assignment. <br>
-6. Once done, paint all the scaffolds (from both haplotypes) into chromosomes. The homologs will approximately alternate. With everything painted, generate your AGP. <br>
+    * Create "Hap_1" and "Hap_2" tags in PretextView. These tags only need to be created once, PretextView will remember them in other curations. In the PretextView menu, click "Meta Data Tags" and type in the two tags as such: <br>
+       <p align="center">
+         <img width="400" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/ad08e8fa-9674-4f92-9699-8e1fc63ea48f"\>
+         <img width="400" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/1d5e1812-b3d8-4c08-acf7-02a337f87cbd">
+       </p>
+       <br>
+    * Teasing the haplotypes apart gets a little messy, especially if there are sequences moved between haplotypes (i.e./ a scaffold from Hap_1 assigned to a Hap_2 scaffold or vice versa). The unassigned scaffolds can be sorted by the H1 and H2 notations we added prior to mapping. However, we need to use the Hap_1 and Hap_2 tags we just created to sort the chromosomes. For each chromosome, assign the appropriate haplotype tag to the left most scaffold, as such: <br>
+       <p align="center">
+        <img width="400" height="300" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/1e2c4a3a-2b2c-4d74-8b8a-ae80228e90bc">
+        <img width="400" height="300" alt="image" src="https://github.com/Nadolina/Rapid-curation-2.0/assets/73204272/a1531c9a-4159-41fd-8d48-9e78c7fa39d3">
+       </p>
+       <br>
+    * Tag the sex chromosomes as per usual. The current VGP standard is to move the sex chromosomes into Hap_1, so make sure that any sex chromosomes are also tagged with the Hap_1 tag. <br>
+    *  Tag any unlocalized sequences as "unloc". Place any unloc sequences at the end (right most side) of their chromosomal assignment. <br>
+7. Once done, paint all the scaffolds (from both haplotypes) into chromosomes. The homologs will approximately alternate. With everything painted, generate your AGP. <br>
    
 Post-curation:
 
