@@ -35,7 +35,7 @@ Curation:
        <br>
     * Tag the sex chromosomes as per usual. The current VGP standard is to move the sex chromosomes into Hap_1, so make sure that any sex chromosomes are also tagged with the Hap_1 tag. <br>
     *  Tag any unlocalized sequences as "unloc". Place any unloc sequences at the end (right most side) of their chromosomal assignment. <br>
-7. Once done, paint all the scaffolds (from both haplotypes) into chromosomes. The homologs will approximately alternate. With everything painted, generate your AGP. <br>
+6. Once done, paint all the scaffolds (from both haplotypes) into chromosomes. The homologs will approximately alternate. With everything painted, generate your AGP. <br>
    
 Post-curation:
 
@@ -59,16 +59,12 @@ sh curation_2.0_pipe.sh -f rCycPin1.HiC.haps_combined.fasta -a rCycPin1.HiC.haps
 ADD THIS 
   
 ## Wishlist/operations to include 
-1. A metadata tag for mis-phased scaffolds such that they don't have to be manually removed by name
-2. Painting both haplotypes and generating an AGP for each instead of one AGP - may be complicated by the unpainted scaffolds 
-3. The rapid-curation scripts replace 'Scaffold' with 'SUPER' for the painted chromosomes, and rename the X and Y as SUPER_X and SUPER_Y - we will need to  replicate this. It doesn't seem like the names can be changed in the AGP prior to imposing the corrected agp on a fasta to generate the final fasta - scaffolds that are joined appear to get lost as a result. DONE (Names are substituted at the fasta level and a tsv tracks this)
-4. The ability to open two pretextview windows, for comparison of pre-/post-curation maps. I fear my computer would promptly melt though. 
-5. Need to sort the fasta before plotting pretextmap - gfastats <fasta> --sort largest. This will require another file to track these movments. Perhaps just a GFA? Will require a renaming function in that case if we intend to keep to a gfa. DONE (performed with seqkit instead because it permits piping)
-6. Generating the chromosome file that is necessary for NCBI submissions. Will need to be able to double check for unloc pieces. DONE.
-7. Another program for automatically pushing the curated files to S3. 
-8. Require an operation to remove haplotypic duplications - mind you, I don't know if this will be an issue in a dual curation setting? DONE. 
-9. what does the agp look like with multiple tags/ modify to parse that
 
+- [ ] Generating the chromosome file that is necessary for NCBI submissions. Will need to be able to double check for unloc pieces. 
+- [ ] Another program for automatically pushing the curated files to VGP S3.  
+- [ ] Better way to parse multiple tags 
+- [ ] More flexibility in placement of unlocs 
+- [ ] Another post-processing script to quick-align and parse the results to adjust the order and orientation of Hap_2 chromosomes to match Hap_1. 
 
 ## FAQ
 1. Why won't my PretextMap open in PretextView?
