@@ -59,11 +59,12 @@ sh curation_2.0_pipe.sh -f <haplotype combined fasta> -a <haplotype agp> -p <hap
 -h help
 -f combined haplotype fasta
 -a haplotype agp generated from pretextview
--p (p for primary) pass 1 for hap 1 and 2 for hap 2
 
 Example:
-sh curation_2.0_pipe.sh -f rCycPin1.HiC.haps_combined.fasta -a rCycPin1.HiC.haps_combined.pretext.agp_hap2 -p 2 
+sh curation_2.0_pipe.sh -f rCycPin1.HiC.haps_combined.fasta -a rCycPin1.HiC.haps_combined.pretext.agp_hap2 -p 2
 ```
+
+7. Run a mashmap or nucmer, or some other brief alignment to doublecheck that Hap_2 chromosomes are in the same order and orientation as Hap_1. Adjust accordingly. 
 6. Generate a pretext map for each haplotype to ensure it curated as anctipated. 
   
 ## Outputs 
