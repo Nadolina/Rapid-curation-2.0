@@ -100,19 +100,19 @@ with open(hap_sort) as original:
         new_records.append(SeqRecord(record.seq,id=record.id, description=""))
 
 
-# with open((outdir+"/inter_chr.tsv"),'w') as file: 
-#     for key in inter_chr_dict.keys():
-#         file.write("%s\t%s\n"%(key,inter_chr_dict[key]))
-#     file.close()
+with open((outdir+"/inter_chr.tsv"),'w') as file: 
+    for key in inter_chr_dict.keys():
+        file.write("%s\t%s\n"%(key,inter_chr_dict[key]))
+    file.close()
 
 # with open((outdir+"/chromosomes.csv")) as file2:
-for value in inter_chr_dict.values():
-    print (value)
+# for value in inter_chr_dict.values():
+#     print (value)
 
 
-# handle=open((outdir+"/hap.chr_level.fa"),"w")
-# SeqIO.write(new_records,handle,"fasta")
-# handle.close()
+handle=open((outdir+"/hap.chr_level.fa"),"w")
+SeqIO.write(new_records,handle,"fasta")
+handle.close()
     
 
 
