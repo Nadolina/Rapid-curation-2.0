@@ -64,7 +64,8 @@ ADD THIS
 - [ ] Another program for automatically pushing the curated files to VGP S3.  
 - [ ] Better way to parse multiple tags 
 - [ ] More flexibility in placement of unlocs 
-- [ ] Another post-processing script to quick-align and parse the results to adjust the order and orientation of Hap_2 chromosomes to match Hap_1. 
+- [ ] Another post-processing script to quick-align and parse the results to adjust the order and orientation of Hap_2 chromosomes to match Hap_1.
+- [ ] Script for checking for curation statistics; number of breaks, joins, haplotigs, etc. 
 
 ## FAQ
 1. Why won't my PretextMap open in PretextView?

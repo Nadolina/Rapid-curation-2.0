@@ -94,15 +94,9 @@ with open(sys.argv[2], "r") as f:
 
 
 maxn += 1
-print(
-    *(
-        "\t".join((f"Scaffold_{maxn + k}", "1", str(n), "1", "W", s, "1", str(n), "+")) ## also need to fix this line to account for the paint/sex chr info
-        for k, (s, n) in enumerate(
-            (s, n) for s, n in seqs.items() if s not in set(seen.keys())
-        )
-    ),
-    sep="\n",
-)
+for k, (s, n) in enumerate((s, n) for s, n in seqs.items()):
+    if s not in set(seen.keys()):
+        print(f"Scaffold_{maxn + k}\t1\t{n}\t1\tW\ts\t1\t{n}\t+\n")
 
 sys.stdout.close()
 sys.stdout = stdout_file
