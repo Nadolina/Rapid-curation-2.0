@@ -96,7 +96,7 @@ with open(sys.argv[2], "r") as f:
 maxn += 1
 for k, (s, n) in enumerate((s, n) for s, n in seqs.items()):
     if s not in set(seen.keys()):
-        print(f"Scaffold_{maxn + k}\t1\t{n}\t1\tW\ts\t1\t{n}\t+\n")
+        print(f"Scaffold_{maxn + k}\t1\t{n}\t1\tW\ts\t1\t{n}\t+")
 
 sys.stdout.close()
 sys.stdout = stdout_file
