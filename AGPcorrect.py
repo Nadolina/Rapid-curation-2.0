@@ -24,7 +24,9 @@ def Open(file_name):
 
 print("Reading fasta...", file=sys.stderr)
 with Open(sys.argv[1]) as f:
-    seqs = {seq.id: len(seq) for seq in SeqIO.parse(f, "fasta")}
+    seqs = {seq.id: len(seq) for seq in SeqIO.parse(f, "fasta")} ## Generating a list of all sequences and their lengths from the fasta
+    ## All expected sequences are present. 
+
 # print(
 #     f"Read fasta, {len(seqs)} sequences",
 #     *(f"{s}: {n} bp" for s, n in seqs.items()),
@@ -34,38 +36,40 @@ with Open(sys.argv[1]) as f:
 # )
 
 seen = {}
-with open(sys.argv[2], "r") as f:
+with open(sys.argv[2], "r") as f: ## Building a dictionary for scaffolds and their lengths based on AGP output
     for line in f:
         if not line.startswith("#"):
             line = line.split("\t")
             if line[4] == "W":
-                #seen[line[-4]] = max(seen.setdefault(line[-4], 0), int(line[-2]))
-                # print (line)
-                # print (line [5], line[7])
                 seen[line[5]] = max(seen.setdefault(line[5],0), int(line[7]))
+## everything printed here is expected
+
 
 stdout_file=sys.stdout
 sys.stdout = open('corrected.agp', 'w')
                 
-with open(sys.argv[2], "r") as f:
-    curr_scaff = None
+with open(sys.argv[2], "r") as f: ## Opening the AGP again
+    curr_scaff = None 
     maxn = 1
     for line in f:
         line = line[:-1]
         if not line.startswith("#"):
             line = line.split("\t")
-            if curr_scaff != line[0]: ## Okay this seems to be checking whether the current scaffold name matches the scaffold name in the previous line
+            if curr_scaff != line[0]: ## checking whether the current scaffold name matches the scaffold name in the previous line
             ## If the current scaffold name does not match the previous, then it print ths scaffold name and the "correction" (which I assume is the BP difference between the )
                 # if curr_scaff:
                 #     print(f"{curr_scaff}: {correct} bp correction", file=sys.stderr)
                 curr_scaff = line[0]
                 # print (line, curr_scaff, "<- AGP")
-                correct = 0 # Where is this correct coming from? nvm it looks like its coming from the previous iteration of this loop? (line 65)
+                correct = 0 
 
-            line[1] = str(int(line[1]) + correct)
+            line[1] = str(int(line[1]) + correct) ## Printing corrected start position I believe
 
             if line[4] == "W" and ((this_l := int(line[7])) == seen[line[5]]):
-                correct += (acc_l := seqs[line[5]]) - this_l ##seems like this is where we are getting negative values from - but it could be that the right "correction isn't matched with the right scaffold "
+                correct += (acc_l := seqs[line[5]]) - this_l ## everything seems to be fine here, the sizes haven't been corrected 
+            
+            
+                ##seems like this is where we are getting negative values from - but it could be that the right "correction isn't matched with the right scaffold "
                 # print (seqs[line[5]], line[5]) 
                 # print (this_l, correct, '\n')
                 ## Seqs is a dictionary of scaffolds and their lengths generated from the original fasta file 
@@ -87,7 +91,6 @@ with open(sys.argv[2], "r") as f:
         else:
             if line.startswith("# DESCRIPTION"):
                 line += "\tModified by PretextView_AGPCorrect"
-            print(line)
 
     # if curr_scaff:
     #     print(f"{curr_scaff}: {correct} bp correction", file=sys.stderr)
@@ -96,7 +99,7 @@ with open(sys.argv[2], "r") as f:
 maxn += 1
 for k, (s, n) in enumerate((s, n) for s, n in seqs.items()):
     if s not in set(seen.keys()):
-        print(f"Scaffold_{maxn + k}\t1\t{n}\t1\tW\ts\t1\t{n}\t+\n")
+        print(f"Scaffold_{k}\t1\t{n}\t1\tW\t{s}\t1\t{n}\t+")
 
 sys.stdout.close()
 sys.stdout = stdout_file

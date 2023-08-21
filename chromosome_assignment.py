@@ -71,7 +71,7 @@ while x < (len(agp_lines)):
             chr_list.append(line[0])          
     x+=1 
 
-chr_list_filter = [chr for chr in chr_list if chr != X_chr and chr != Y_chr and chr != W_chr and chr != Z_chr]
+chr_list_filter = set([chr for chr in chr_list if chr != X_chr and chr != Y_chr and chr != W_chr and chr != Z_chr])
 
 
 scaff_num=1
@@ -80,7 +80,11 @@ inter_chr_dict={}
 with open(hap_sort) as original:
     records = SeqIO.parse(original, 'fasta')
     for record in records:
-        if X_chr in record.id and X_chr != "":
+        if record.id in chr_list_filter:
+            inter_chr_dict[record.id]=("SUPER_"+str(scaff_num))
+            record.id=("SUPER_"+str(scaff_num))
+            scaff_num += 1
+        elif X_chr in record.id and X_chr != "":
             sex_chr_asn(X_chr,"SUPER_X")
         elif Y_chr in record.id and Y_chr != "":
             sex_chr_asn(Y_chr,"SUPER_Y")
@@ -93,10 +97,7 @@ with open(hap_sort) as original:
             super_name=inter_chr_dict[orig_name]
             inter_chr_dict[record.id]=re.sub(orig_name,super_name,record.id)
             record.id=(re.sub(orig_name,super_name,record.id))
-        elif record.id in chr_list_filter:
-            inter_chr_dict[record.id]=("SUPER_"+str(scaff_num))
-            record.id=("SUPER_"+str(scaff_num))
-            scaff_num += 1
+
         new_records.append(SeqRecord(record.seq,id=record.id, description=""))
 
 

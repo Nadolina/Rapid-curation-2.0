@@ -5,6 +5,7 @@ import csv
 import pandas as pd
 
 
+
 corr="corrected.agp"
 
 header=[]
@@ -12,7 +13,7 @@ agp_lines=[]
 with open(corr) as file:
     agp = csv.reader(file,delimiter='\t')
     for line in agp:
-        if "#" in line[0]:
+        if "#" in line:
             header.append(line)
         else: 
             agp_lines.append(line)

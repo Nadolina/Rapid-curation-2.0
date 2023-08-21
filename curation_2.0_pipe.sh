@@ -28,9 +28,14 @@ while getopts ":hf:a:p:" option; do
     esac
 done
 
-mkdir -p logs 
-count=`ls logs/* | wc -l`
-exec 1<> logs/std.${count}.out
+if [ -d logs ]
+then
+    count=`ls logs/* | wc -l`
+    exec 1<> logs/std.${count}.out
+else 
+    mkdir -p logs 
+    exec 1<> logs/std.0.out
+fi 
 
 pth=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 printf "Rapid-curation-2.0 scripts located in: $pth\n"
@@ -38,9 +43,9 @@ printf "Rapid-curation-2.0 scripts located in: $pth\n"
 ## Programs/tools
 # use_gfastats=/vggpfs/fs3/vgl/store/nbrajuka/gfastats/build/bin/gfastats
 # use_seqkit=/vggpfs/fs3/vgl/store/nbrajuka/conda/envs/statistics/bin/seqkit
-printf "Dependecies:\nBiopython v1.81\npandas\ngfastats v1.3.6" 
+printf "Dependecies:\nBiopython v1.81\npandas\ngfastats v1.3.6\n" 
 
-## could reasonably put everything in a function and just call for both haps. 
+# could reasonably put everything in a function and just call for both haps. 
 
 mkdir -p Hap_1
 mkdir -p Hap_2
