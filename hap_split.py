@@ -13,7 +13,7 @@ agp_lines=[]
 with open(corr) as file:
     agp = csv.reader(file,delimiter='\t')
     for line in agp:
-        if "#" in line:
+        if "#" in line[0]:
             header.append(line)
         else: 
             agp_lines.append(line)
@@ -25,6 +25,7 @@ current_scaff=''
 H1_lines=[]
 H2_lines=[]
 for line in agp_lines:
+    
     if 'proximity_ligation' in line or 'Painted' in line:
         if 'Hap_1' in line:
             H1_lines.append(line)
@@ -43,9 +44,6 @@ for line in agp_lines:
             H2_lines.append(line)
 
 # for line in H1_lines:
-#     print (line)
-
-# for line in H2_lines:
 #     print (line)
 
 

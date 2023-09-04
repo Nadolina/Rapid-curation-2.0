@@ -99,7 +99,7 @@ with open(sys.argv[2], "r") as f: ## Opening the AGP again
 maxn += 1
 for k, (s, n) in enumerate((s, n) for s, n in seqs.items()):
     if s not in set(seen.keys()):
-        print(f"Scaffold_{k}\t1\t{n}\t1\tW\t{s}\t1\t{n}\t+")
+        print(f"Scaffold_{maxn+k}\t1\t{n}\t1\tW\t{s}\t1\t{n}\t+")
 
 sys.stdout.close()
 sys.stdout = stdout_file

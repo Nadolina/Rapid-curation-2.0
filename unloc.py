@@ -64,7 +64,7 @@ for index in unlocs: ##This assumes unlocs are placed at the end of scaffolds
         prox_lig_hap_ind.add(index-1)
 
 
-haplotigs=(agp_df.index[agp_df['painted']=='Haplotig'])
+haplotigs=(agp_df.index[agp_df['tag']=='Haplotig'])
 prox_lig_hap_ind.update(haplotigs)
 agp_df_mod=agp_df.drop(list(prox_lig_hap_ind))
 
