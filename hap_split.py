@@ -43,9 +43,6 @@ for line in agp_lines:
         elif 'H2' in line[5]:
             H2_lines.append(line)
 
-# for line in H1_lines:
-#     print (line)
-
 
 with open ('Hap_1/hap.agp','w',newline='\n') as file1:
     writer=csv.writer(file1,delimiter='\t')

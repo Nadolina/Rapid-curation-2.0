@@ -5,7 +5,6 @@ import csv
 import pandas as pd
 import sys
 
-#corr_agp="hap.agp"
 outdir=sys.argv[1]
 hap=outdir + '/hap.agp'
 
@@ -42,15 +41,10 @@ else:
 
 unlocs=(agp_df.index[agp_df['tag']=='Unloc']).to_list()
 
-
-prox_lig_hap_ind=set()
 scaffs_with_unlocs=[]
 unloc_num=1
 for index in unlocs: ##This assumes unlocs are placed at the end of scaffolds 
     scaff=(agp_df.iloc[index].to_list())[0]
-    # scaff_lines=(agp_df.loc[agp_df['chr']==scaff])
-    # ind_list=scaff_lines.index.to_list()
-    # unlocs_inds_inter=list(set(ind_list).intersection(unlocs))
     agp_df.loc[index,'chr_start']=1
     agp_df.loc[index,'chr_end']=agp_df.loc[index,'scaff_end']
     if scaff in scaffs_with_unlocs:
@@ -60,21 +54,51 @@ for index in unlocs: ##This assumes unlocs are placed at the end of scaffolds
         unloc_num=1
         agp_df.loc[index,'chr']=agp_df.loc[index,'chr']+"_unloc_"+str(unloc_num)
         scaffs_with_unlocs.append(scaff)
-    if (agp_df.loc[index-1,'ori']) == 'proximity_ligation':
-        prox_lig_hap_ind.add(index-1)
-
 
 haplotigs=(agp_df.index[agp_df['tag']=='Haplotig'])
-prox_lig_hap_ind.update(haplotigs)
-agp_df_mod=agp_df.drop(list(prox_lig_hap_ind))
+agp_df_mod=agp_df.drop(haplotigs)
+agp_list=agp_df_mod.values.tolist()
+
+num_lines=len(agp_list)-1
+line_num=0
+prox_lig_lines=[]
+while line_num < num_lines:
+    current_line=agp_list[line_num]
+    current_scaff=current_line[0]
+    prev_line=agp_list[line_num-1]
+    next_line=agp_list[line_num+1]
+    if current_line[10]=='Unloc' and prev_line[8]=='proximity_ligation':
+        prox_lig_lines.append(prev_line)
+    elif current_line[10]=='Unloc' and next_line[8]=='proximity_ligation':
+        prox_lig_lines.append(next_line)
+    elif current_line[8]=='proximity_ligation' and prev_line[8]=='proximity_ligation':
+        prox_lig_lines.append(current_line)
+        prox_lig_lines.append(prev_line)
+    elif current_line[0]!=next_line[0] and current_line[8]=='proximity_ligation':
+        prox_lig_lines.append(current_line)
+    line_num+=1
+
+final_list=[]
+for line in agp_list:
+    if line in prox_lig_lines:
+        print ("Gap line removed:", line)
+    else:
+        final_list.append(line)
+
+
+haplotigs_list=[agp_df.iloc[ind].tolist() for ind in haplotigs]
 
 
 with open ((outdir+'/hap.unlocs.no_hapdups.agp'),'w',newline='\n') as f:
     writer=csv.writer(f,delimiter='\t')
     writer.writerows(header)
-    writer.writerows(agp_df_mod.values.tolist())
+    writer.writerows(final_list)
 f.close()
 
+with open ((outdir+'/haplotigs.agp'),'w',newline='\n') as h:
+    writer=csv.writer(h,delimiter='\t')
+    writer.writerows(haplotigs_list)
+h.close()
 
 
 #---------------------------------------------------

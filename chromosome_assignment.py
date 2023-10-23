@@ -73,8 +73,6 @@ while x < (len(agp_lines)):
 
 chr_list_filter = set([chr for chr in chr_list if chr != X_chr and chr != Y_chr and chr != W_chr and chr != Z_chr])
 
-print (chr_list_filter)
-
 scaff_num=1
 new_records=[]
 inter_chr_dict={}
@@ -100,6 +98,8 @@ with open(hap_sort) as original:
             record.id=(re.sub(orig_name,super_name,record.id))
 
         new_records.append(SeqRecord(record.seq,id=record.id, description=""))
+
+print (inter_chr_dict)
 
 
 with open((outdir+"/inter_chr.tsv"),'w') as file: 
