@@ -65,7 +65,10 @@ ADD THIS
 - [ ] Better way to parse multiple tags 
 - [ ] More flexibility in placement of unlocs 
 - [ ] Another post-processing script to quick-align and parse the results to adjust the order and orientation of Hap_2 chromosomes to match Hap_1.
-- [ ] Script for checking for curation statistics; number of breaks, joins, etc. 
+- [ ] Script for checking for curation statistics; number of breaks, joins, etc.
+- [ ] more flexibility in dealing with sex chromosomes so as to accomodate variable sex chromosome systems (i.e./XY1Y2, etc.)
+- [ ] removing haplotigs, but they have to be painted to be removed as per the configuation right now; the proximity ligations being inserted b/c of painting aren't being removed when the haplotigs get removed
+- [ ] output haplotigs to fasta 
 
 ## FAQ
 1. Why won't my PretextMap open in PretextView?
