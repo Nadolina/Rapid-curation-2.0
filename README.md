@@ -1,5 +1,5 @@
 
-##NOTE: I have transitioned to a new role and am no longer participating in the Vertebrate Genomes Project. As such, this software is no longer being maintained. For help with the pipeline or genome curation generally, please contact the Vertebrate Genome Lab at Rockefeller University. 
+__NOTE: I have transitioned to a new role and am no longer participating in the Vertebrate Genomes Project. As such, this software is no longer being maintained. For help with the pipeline or genome curation generally, please contact the Vertebrate Genome Lab at Rockefeller University.__
 
 # Rapid-curation-2.0
 TPF-less rapid curation of genomes 
