@@ -71,7 +71,7 @@ printf "Imposing the haplotypic agp on the original fasta to generate a curated 
 printf "gfastats $fasta --agp-to-path Hap_1/hap.unlocs.no_hapdups.agp --sort largest -o Hap_1/hap.sorted.fa\n"
 gfastats $fasta --agp-to-path Hap_1/hap.unlocs.no_hapdups.agp -o Hap_1/hap.unlocs.no_hapdups.fa 2>> logs/std.${count}.out 
 
-printf "gfastats $fasta --agp-to-path Hap_1/hap.unlocs.no_hapdups.agp --sort largest -o Hap_2/hap.sorted.fa\n\n"
+printf "gfastats $fasta --agp-to-path Hap_2/hap.unlocs.no_hapdups.agp --sort largest -o Hap_2/hap.sorted.fa\n\n"
 gfastats $fasta --agp-to-path Hap_2/hap.unlocs.no_hapdups.agp -o Hap_2/hap.unlocs.no_hapdups.fa 2>> logs/std.${count}.out 
 
 printf "gfastats Hap_1/hap.unloc.no_hapdups.fa --sort largest -o Hap_1/hap.sorted.fa"
